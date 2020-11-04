@@ -1,0 +1,47 @@
+﻿Input:: a positive integer with N digits (given as an array)
+Output:: the next bigger number that can be formed with the same set of digits present in the input
+
+123 -> 132
+132 -> 213
+213 -> 231
+231 -> 312
+312 -> 321
+321 -> 321
+
+14653 -> 15346
+
+public int[] NxtBiggest(int[] input)
+{
+    int num;
+    int index;
+    int oriIndex;
+    int i= input.Length-1; 
+    max = input[i];
+    while(input[i-1]>input[i])
+    {
+        i--;
+    }
+    num = input[i-1];
+    oriIndex = i-1;
+    int m = input[oriIndex+1];
+    for(int i = oriIndex+1; i<input.Length; i++)
+    {
+        while(input[i] > num)
+        {
+            if(m>input[i])
+            {
+                index= i;
+                m = input[i];
+            }
+        }
+    }
+    Swap(input[oriIndex], input[index]);
+    input.Sort(oriIndex+1);
+}
+
+private void Swap(ref int a, ref int b)
+{
+    var temp = a;
+    a = b;
+    b= temp;
+}
