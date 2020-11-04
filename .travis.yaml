@@ -1,5 +1,27 @@
 language: csharp
-solution: ConsoleApp1.sln
-mono: none
+mono: 
+  - latest
 dotnet: 4.7.2
+solution: ConsoleApp1.sln
 dist: trusty
+
+install:
+  - dotnet restore
+
+script:
+  - dotnet publish --configuration Release --runtime win-x64 /p PublishSingleFile=true --output win-x64
+  - dotnet publish --configuration Release --runtime win-x86 /p PublishSingleFile=true --output win-x86
+  
+before deploy:
+  - zip -r9 win-x64.zip win-x64
+  - zip -r9 win-x86.zip win-x86
+  
+deploy:
+  provider: releases
+  api_key: $api_key
+  file:
+    - win-x64.zip
+    - win-x86.zip
+  skip_cleanup: true
+  on:
+    tags: true
