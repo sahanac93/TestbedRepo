@@ -1,2 +1,5 @@
 language: csharp
 solution: ConsoleApp1.sln
+mono: none
+dotnet: 4.7.2
+dist: trusty
